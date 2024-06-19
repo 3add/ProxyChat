@@ -9,7 +9,7 @@ ProxyChat is a velocity plugin made by 3add.
 
 - **/networkbroadcast <message>** -> Send a staff message to all proxied players. 
 
-![image](https://github.com/3add/ProxyChat/assets/141489004/da0a1728-7af6-4dbe-b1dd-c18f12511502)
+![image](https://github.com/3add/ProxyChat/assets/141489004/a14e1467-c862-43b9-892b-eefafa7ef184)
 
 *The permission to use "**/networkbroadcast <message>**" is "**broadcast.network**" it also has "**/netbc <message>**" as an alias.*
 
