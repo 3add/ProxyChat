@@ -5,8 +5,16 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import group.proxychat.ProxyChat;
+import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
 
 public class BroadcastCommand implements SimpleCommand {
     ProxyChat velocity;
@@ -25,12 +33,28 @@ public class BroadcastCommand implements SimpleCommand {
                         "<red>Usage: /networkbroadcast <Message you want to broadcast>"
                 ));
             } else {
-                for (RegisteredServer server : velocity.getVelocity().getAllServers()) {
-                    for (Player serverPlayer : server.getPlayersConnected()) {
-                        serverPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
-                                "<newline><color:#ffde4a><b>NETWORK</b></color> <gray>[<white>" + sender.getCurrentServer().get().getServerInfo().getName() + "</white>]</gray> <dark_gray>»</dark_gray> " + toBroadcast + "<newline> "
-                        ));
-                    }
+                File configFile = new File("./plugins/ProxyChat/config.yml");
+
+                InputStream stream = null;
+                try {
+                    stream = new FileInputStream(configFile);
+                } catch (IOException e){}
+
+                Yaml yaml = new Yaml();
+
+                Map<String, Object> data = yaml.load(stream);
+
+
+                Map<String, Object> staffMap = (Map<String, Object>) data.get("broadcast");
+                String format = staffMap.get("format").toString();
+
+                String message = String.join(" ", invocation.arguments()).trim();
+
+                format = format.replaceAll("%broadcastserver%", sender.getCurrentServer().get().getServer().getServerInfo().getName());
+                format = format.replaceAll("%broadcastmessage%", message);
+
+                for (Player proxiedPlayer : velocity.getVelocity().getAllPlayers()) {
+                    proxiedPlayer.sendMessage(MiniMessage.miniMessage().deserialize(format));
                 }
             }
         } else {

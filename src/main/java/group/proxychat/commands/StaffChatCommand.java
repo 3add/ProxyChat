@@ -10,6 +10,14 @@ import group.proxychat.ProxyChat;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.yaml.snakeyaml.Yaml;
+
+import javax.swing.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
 
 public class StaffChatCommand implements SimpleCommand {
 
@@ -30,16 +38,34 @@ public class StaffChatCommand implements SimpleCommand {
             ));
             return;
         } else {
+            File configFile = new File("./plugins/ProxyChat/config.yml");
+
+            InputStream stream = null;
+            try {
+                stream = new FileInputStream(configFile);
+            } catch (IOException e){}
+
+            Yaml yaml = new Yaml();
+
+            Map<String, Object> data = yaml.load(stream);
+
+
+            Map<String, Object> staffMap = (Map<String, Object>) data.get("staffchat");
+            String format = staffMap.get("format").toString();
+
             String message = String.join(" ", args).trim();
+
+            format = format.replaceAll("%playerserver%", sender.getCurrentServer().get().getServer().getServerInfo().getName());
+            format = format.replaceAll("%playername%", source.get(Identity.NAME).orElse("NONE"));
+            format = format.replaceAll("%staffmessage%", message);
+
 
             if (!(message.isBlank())) {
                 for (RegisteredServer server : velocity.getVelocity().getAllServers()) {
 
                     for (Player player : server.getPlayersConnected()) {
                         if (player.hasPermission("staffchat.network")) {
-                            player.sendMessage(MiniMessage.miniMessage().deserialize(
-                                    "<gray>[</gray><color:#ff0004>Staff</color><gray>]</gray> <gray>[" + sender.getCurrentServer().get().getServer().getServerInfo().getName() + "]</gray> <color:#ff988f>" + source.get(Identity.NAME).orElse("NONE") + ":</color> " + message
-                            ));
+                            player.sendMessage(MiniMessage.miniMessage().deserialize(format));
                         }
                     }
                 }
@@ -52,10 +78,25 @@ public class StaffChatCommand implements SimpleCommand {
         }
     }
 
+
     @Override
     public boolean hasPermission(final Invocation inovation) {
+        File configFile = new File("./plugins/ProxyChat/config.yml");
 
-        return inovation.source().hasPermission("staffchat.network");
+        InputStream stream = null;
+        try {
+            stream = new FileInputStream(configFile);
+        } catch (IOException e){}
+
+        Yaml yaml = new Yaml();
+
+        Map<String, Object> data = yaml.load(stream);
+
+
+        Map<String, Object> staffMap = (Map<String, Object>) data.get("staffchat");
+
+
+        return inovation.source().hasPermission(staffMap.get("permission").toString());
     }
 
 }
