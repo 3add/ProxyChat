@@ -13,3 +13,14 @@ ProxyChat is a velocity plugin made by 3add.
 
 *The permission to use "**/networkbroadcast <message>**" is "**broadcast.network**" it also has "**/netbc <message>**" as an alias.*
 
+## PlaceHolders in Config.yml
+### Network Broadcast
+- broadcastmessage -> The message you wish to broadcast
+- broadcastserver - > The server of the player who is network broadcasting.
+### StaffChat
+- playerserver -> The server of the player that is staff chatting.
+- playername -> The name of the player that is staff chatting.
+- staffmessage -> The message which the player that is staff chatting wishes to send
+
+*If you wish to use a placeholder in your format you must declare it like "**%placeholder%**", the plugin will parse it.*
+
