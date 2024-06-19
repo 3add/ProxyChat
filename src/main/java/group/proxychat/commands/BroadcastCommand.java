@@ -19,6 +19,7 @@ public class BroadcastCommand implements SimpleCommand {
     public void execute(final Invocation invocation) {
         if (invocation.source().hasPermission("broadcast.network")) {
             String toBroadcast = String.join(" ", invocation.arguments()).trim();
+            Player sender = (Player) invocation.source();
             if (toBroadcast.isBlank()) {
                 invocation.source().sendMessage(MiniMessage.miniMessage().deserialize(
                         "<red>Usage: /networkbroadcast <Message you want to broadcast>"
@@ -27,7 +28,7 @@ public class BroadcastCommand implements SimpleCommand {
                 for (RegisteredServer server : velocity.getVelocity().getAllServers()) {
                     for (Player serverPlayer : server.getPlayersConnected()) {
                         serverPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
-                                "<newline><color:#ffde4a><b>NETWORK</b></color> <gray>[<white>BroKits</white>]</gray> <dark_gray>»</dark_gray> " + toBroadcast + "<newline> "
+                                "<newline><color:#ffde4a><b>NETWORK</b></color> <gray>[<white>" + sender.getCurrentServer().get().getServerInfo().getName() + "</white>]</gray> <dark_gray>»</dark_gray> " + toBroadcast + "<newline> "
                         ));
                     }
                 }

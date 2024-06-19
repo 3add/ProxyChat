@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.velocitypowered:velocity-api:3.3.0-SNAPSHOT" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.velocitypowered" artifactId="velocity-api" version="3.3.0-SNAPSHOT" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.velocitypowered/velocity-api/3.3.0-SNAPSHOT/fffa552d7ff8806f52eecc05b99148f6f6e18267/velocity-api-3.3.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

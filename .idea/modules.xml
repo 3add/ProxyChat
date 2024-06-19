@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProxyChat.iml" filepath="$PROJECT_DIR$/.idea/modules/ProxyChat.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProxyChat.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ProxyChat.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProxyChat.test.iml" filepath="$PROJECT_DIR$/.idea/modules/ProxyChat.test.iml" />
     </modules>
   </component>
 </project>
